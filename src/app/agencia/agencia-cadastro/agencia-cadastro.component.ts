@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Agencia } from '../agencia-model';
 
 @Component({
   selector: 'app-agencia-cadastro',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgenciaCadastroComponent implements OnInit {
 
+  agencia: Agencia = new Agencia();
+
   constructor() { }
 
   ngOnInit() {
   }
+
+
+  // get editando() {
+  //   return Boolean(this.categoria.id);
+  // }
 
 }

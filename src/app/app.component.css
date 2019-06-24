@@ -10,19 +10,12 @@ table {
   width: 100%;
 }
 
-::ng-deep.mat-form-field-label{
-  color:black !important;
-}
-::ng-deep.mat-form-field-underline{
-  background-color:black !important;
-}
-
 .cadastro-button{
-  /* margin-top: 10%; */
   margin: 5% 1% 1% 1%;
   float: right;
 }
 
 .cadastro-button button{
   background-color: rgb(83, 172, 91);
+  color: white;
 }
