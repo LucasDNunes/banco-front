@@ -1,0 +1,41 @@
+<div class="container">
+  
+    <div>
+      <h1>{{editando? 'Edição de ' : 'Cadastrar'}} {{entidade}}</h1>
+    </div>
+  
+    <div>
+      <form #form="ngForm" autocomplete="off" class="example-container">
+        <!-- <mat-form-field>
+          <input matInput required placeholder="Input" minlength="3" [(ngModel)]="cliente.nome" name="nome" placeholder="Nome">
+          <mat-error>Mínimo de 3 caracteres</mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-label>Cliente</mat-label>
+          <mat-select required name="cliente" [(ngModel)]="conta.cliente">
+            <mat-option *ngFor="let cliente of clientes" [value]="cliente.value">
+              {{cliente.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Agencia</mat-label>
+          <mat-select required name="agencia" [(ngModel)]="conta.agencia">
+            <mat-option *ngFor="let agencia of agencias" [value]="agencia.value">
+              {{agencia.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <!-- <mat-form-field>
+          <input matInput required placeholder="Input" type="number" name="idade" [(ngModel)]="cliente.idade" placeholder="Idade">
+           <mat-error *ngIf="numero.invalid">Mínimo de 3 caracteres</mat-error>
+        </mat-form-field> -->
+      
+    </form>
+    <button mat-raised-button [disabled]="form.invalid" (click)="editando? salvar() : atualizar()" class="cadastro">{{editando? 'Salvar ' : 'Cadastrar'}}</button>
+    <button mat-raised-button color="primary" routerLink="/clientes">Voltar Pesquisa</button>
+    </div>
+  </div>

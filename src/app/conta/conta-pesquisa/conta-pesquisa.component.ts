@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AgenciaService } from '../agencia.service';
-import { Agencia } from '../agencia-model';
+import { Component, OnInit } from '@angular/core';
+import { trigger, state, transition, style, animate } from '@angular/animations';
+import { ContaService } from '../conta.service';
+import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { MatConfirmDialogComponent } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.component';
+import { Conta } from '../conta-model';
 
 @Component({
-  selector: 'app-agencia-pesquisa',
-  templateUrl: './agencia-pesquisa.component.html',
+  selector: 'app-conta-pesquisa',
+  templateUrl: './conta-pesquisa.component.html',
   styleUrls: [
-    './agencia-pesquisa.component.css',
+    './conta-pesquisa.component.css',
     '../../app.component.css'
   ],
   animations: [
@@ -20,11 +20,11 @@ import { MatConfirmDialogComponent } from 'src/app/mat-confirm-dialog/mat-confir
     ]),
   ],
 })
-export class AgenciaPesquisaComponent implements OnInit {
+export class ContaPesquisaComponent implements OnInit {
 
-  Entidade = 'Agencia';
-  columnsToDisplay: string[] = ['numero', 'cidade', 'bairro'];
-  expandedElement: Agencia | null;
+  Entidade = 'Conta';
+  columnsToDisplay: string[] = ['cliente', 'agencia', 'saldo'];
+  expandedElement: Conta | null;
   dataSource = null;
   excluir = false;
 
@@ -33,11 +33,24 @@ export class AgenciaPesquisaComponent implements OnInit {
   }
 
   constructor(
-    private service: AgenciaService,
+    private service: ContaService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
 
+  isCliente(column: string): boolean {
+    if (column === 'cliente') {
+      return true;
+    }
+    return false;
+  }
+
+  isAgencia(column: string): boolean {
+    if (column === 'agencia') {
+      return true;
+    }
+    return false;
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -49,15 +62,15 @@ export class AgenciaPesquisaComponent implements OnInit {
     });
   }
 
-  deletar(agencia: Agencia): void {
+  deletar(conta: Conta): void {
     const dialogRef = this.dialog.open(MatConfirmDialogComponent, {
       width: '300px',
-      data: 'Deseja realemnte excluir a agencia numero: ' + agencia.numero + ' ?'
+      data: 'Deseja realemnte excluir a conta do cliente: ' + conta.cliente.nome + ' ?'
     });
 
     dialogRef.afterClosed().subscribe(excluir => {
       if (excluir) {
-        this.service.excluir(agencia.id).then(() => {
+        this.service.excluir(conta.id).then(() => {
           this.listar();
         }).catch(erro => {
           this.snackBar.open(erro.error.message, 'fechar', {
@@ -67,4 +80,5 @@ export class AgenciaPesquisaComponent implements OnInit {
       }
     });
   }
+
 }

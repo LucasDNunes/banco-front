@@ -1,22 +1,29 @@
 <div class="container">
   
   <div>
-    <h1>{{editando? 'Edição de ' : 'Novo'}} {{entidade}}</h1>
+    <h1>{{editando? 'Edição de ' : 'Cadastrar'}} {{entidade}}</h1>
   </div>
 
-  <div class="example-container">
-    <mat-form-field>
-      <input matInput placeholder="Input">
-    </mat-form-field>
-  
-    <mat-form-field>
-      <textarea matInput placeholder="Textarea"></textarea>
-    </mat-form-field>
-  
-    <mat-form-field>
-      <mat-select placeholder="Select">
-        <mat-option value="option">Option</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div>
+    <form #form="ngForm" autocomplete="off" class="example-container">
+      <mat-form-field>
+        <input matInput [formControl]="numero" required placeholder="Input" type="number" [(ngModel)]="agencia.numero" placeholder="Número da agência">
+        <mat-error *ngIf="numero.invalid">Mínimo de 3 caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput required placeholder="Input" minlength="3" [(ngModel)]="agencia.cidade" name="cidade" placeholder="Cidade">
+        <mat-error>Mínimo de 3 caracteres</mat-error>
+      </mat-form-field>
+    
+      <mat-form-field>
+          <input matInput required placeholder="Input" minlength="3" [(ngModel)]="agencia.bairro" name="bairro" placeholder="Bairro">
+          <mat-error>Mínimo de 3 caracteres</mat-error>
+      </mat-form-field>
+
+    
+  </form>
+  <button mat-raised-button [disabled]="form.invalid || numero.invalid" (click)="salvar()" class="cadastro">{{editando? 'Salvar ' : 'Cadastrar'}}</button>
+  <button mat-raised-button color="primary" routerLink="/agencias">Voltar Pesquisa</button>
   </div>
 </div>

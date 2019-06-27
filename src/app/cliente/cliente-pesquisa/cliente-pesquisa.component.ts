@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AgenciaService } from '../agencia.service';
-import { Agencia } from '../agencia-model';
+import { Component, OnInit } from '@angular/core';
+import { trigger, state, transition, style, animate } from '@angular/animations';
+import { ClienteService } from '../cliente.service';
+import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
+import { Cliente } from '../cliente-model';
 import { MatConfirmDialogComponent } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.component';
 
 @Component({
-  selector: 'app-agencia-pesquisa',
-  templateUrl: './agencia-pesquisa.component.html',
+  selector: 'app-cliente-pesquisa',
+  templateUrl: './cliente-pesquisa.component.html',
   styleUrls: [
-    './agencia-pesquisa.component.css',
+    './cliente-pesquisa.component.css',
     '../../app.component.css'
   ],
   animations: [
@@ -20,11 +20,11 @@ import { MatConfirmDialogComponent } from 'src/app/mat-confirm-dialog/mat-confir
     ]),
   ],
 })
-export class AgenciaPesquisaComponent implements OnInit {
+export class ClientePesquisaComponent implements OnInit {
 
-  Entidade = 'Agencia';
-  columnsToDisplay: string[] = ['numero', 'cidade', 'bairro'];
-  expandedElement: Agencia | null;
+  Entidade = 'Cliente';
+  columnsToDisplay: string[] = ['nome', 'sexo', 'idade'];
+  expandedElement: Cliente | null;
   dataSource = null;
   excluir = false;
 
@@ -33,7 +33,7 @@ export class AgenciaPesquisaComponent implements OnInit {
   }
 
   constructor(
-    private service: AgenciaService,
+    private service: ClienteService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
@@ -49,15 +49,15 @@ export class AgenciaPesquisaComponent implements OnInit {
     });
   }
 
-  deletar(agencia: Agencia): void {
+  deletar(cliente: Cliente): void {
     const dialogRef = this.dialog.open(MatConfirmDialogComponent, {
       width: '300px',
-      data: 'Deseja realemnte excluir a agencia numero: ' + agencia.numero + ' ?'
+      data: 'Deseja realemnte excluir o cliente: ' + cliente.nome + ' ?'
     });
 
     dialogRef.afterClosed().subscribe(excluir => {
       if (excluir) {
-        this.service.excluir(agencia.id).then(() => {
+        this.service.excluir(cliente.id).then(() => {
           this.listar();
         }).catch(erro => {
           this.snackBar.open(erro.error.message, 'fechar', {
@@ -67,4 +67,5 @@ export class AgenciaPesquisaComponent implements OnInit {
       }
     });
   }
+
 }

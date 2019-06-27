@@ -26,21 +26,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .example-element-diagram {
-  /* min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px; */
   justify-content: space-between;
   margin: 1%;
 }
-
-/* .example-element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-} */
 
 .example-element-description {
   padding: 16px;
@@ -49,7 +37,3 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
-
-/* .example-element-position{
-  margin: 3%;
-} */
