@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatToolbarModule, MatButtonModule, MatDialogModule, MatSnackBarModule} from '@angular/material';
+import {MatToolbarModule, MatButtonModule, MatDialogModule, MatSnackBarModule, MatInputModule} from '@angular/material';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { AgenciaPesquisaComponent } from './agencia/agencia-pesquisa/agencia-pesquisa.component';
@@ -16,6 +17,8 @@ import { ClienteCadastroComponent } from './cliente/cliente-cadastro/cliente-cad
 import { ContaModule } from './conta/conta.module';
 import { ContaPesquisaComponent } from './conta/conta-pesquisa/conta-pesquisa.component';
 import { ContaCadastroComponent } from './conta/conta-cadastro/conta-cadastro.component';
+import { MatDialogSaqueDepositoComponent } from './mat-dialog-saque-deposito/mat-dialog-saque-deposito.component';
+import { FormsModule } from '@angular/forms';
 
 const rotas: Routes = [
   { path: 'agencias', component: AgenciaPesquisaComponent },
@@ -32,13 +35,17 @@ const rotas: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MatConfirmDialogComponent
+    MatConfirmDialogComponent,
+    MatDialogSaqueDepositoComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatButtonModule,
     RouterModule.forRoot(rotas),
     MatDialogModule,
@@ -49,6 +56,9 @@ const rotas: Routes = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [MatConfirmDialogComponent]
+  entryComponents: [
+    MatConfirmDialogComponent,
+    MatDialogSaqueDepositoComponent
+  ]
 })
 export class AppModule { }

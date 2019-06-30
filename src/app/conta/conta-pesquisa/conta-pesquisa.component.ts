@@ -4,6 +4,7 @@ import { ContaService } from '../conta.service';
 import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { MatConfirmDialogComponent } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.component';
 import { Conta } from '../conta-model';
+import { MatDialogSaqueDepositoComponent } from 'src/app/mat-dialog-saque-deposito/mat-dialog-saque-deposito.component';
 
 @Component({
   selector: 'app-conta-pesquisa',
@@ -27,6 +28,9 @@ export class ContaPesquisaComponent implements OnInit {
   expandedElement: Conta | null;
   dataSource = null;
   excluir = false;
+
+  animal: string;
+  name: string;
 
   ngOnInit() {
     this.listar();
@@ -81,4 +85,49 @@ export class ContaPesquisaComponent implements OnInit {
     });
   }
 
+  sacar(conta: Conta): void {
+    const dialogRef = this.dialog.open(MatDialogSaqueDepositoComponent, {
+      width: '300px',
+      // data: 'Deseja realemnte excluir a conta do cliente: ' + conta.cliente.nome + ' ?'
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(valor => {
+      if (valor) {
+        if (valor > conta.saldo) {
+          this.snackBar.open('Valor acima do saldo em conta', 'fechar', {
+            duration: 10000
+          });
+          return;
+        }
+        this.service.sacar(conta, valor).then(() => {
+          this.listar();
+        }).catch(erro => {
+          this.snackBar.open(erro.error.message, 'fechar', {
+            duration: 10000
+          });
+        });
+      }
+    });
+  }
+
+  depositar(conta: Conta): void {
+    const dialogRef = this.dialog.open(MatDialogSaqueDepositoComponent, {
+      width: '300px',
+      // data: 'Deseja realemnte excluir a conta do cliente: ' + conta.cliente.nome + ' ?'
+      data: {name: 'this.name', animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(valor => {
+      if (valor) {
+        this.service.depositar(conta, valor).then(() => {
+          this.listar();
+        }).catch(erro => {
+          this.snackBar.open(erro.error.message, 'fechar', {
+            duration: 10000
+          });
+        });
+      }
+    });
+  }
 }

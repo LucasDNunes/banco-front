@@ -34,4 +34,14 @@ export class ContaService {
     return this.http.put(this.contaUrl + '/' + conta.id, conta)
       .toPromise();
   }
+
+  depositar(conta: Conta, valorDeposito: number) {
+    return this.http.post(this.contaUrl + '/' + conta.id + '/depositar?deposito=' + valorDeposito, conta)
+      .toPromise();
+  }
+
+  sacar(conta: Conta, valorsaque: number) {
+    return this.http.put(this.contaUrl + '/' + conta.id + '/sacar?saque=' + valorsaque, conta)
+      .toPromise();
+  }
 }
