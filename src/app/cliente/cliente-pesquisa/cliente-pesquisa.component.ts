@@ -41,6 +41,7 @@ export class ClientePesquisaComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    debugger
   }
 
   listar() {

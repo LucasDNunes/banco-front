@@ -6,10 +6,6 @@
   
     <div>
       <form #form="ngForm" autocomplete="off" class="example-container">
-        <!-- <mat-form-field>
-          <input matInput required placeholder="Input" minlength="3" [(ngModel)]="cliente.nome" name="nome" placeholder="Nome">
-          <mat-error>Mínimo de 3 caracteres</mat-error>
-        </mat-form-field> -->
 
         <mat-form-field>
           <mat-label>Cliente</mat-label>
@@ -28,14 +24,9 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        
-        <!-- <mat-form-field>
-          <input matInput required placeholder="Input" type="number" name="idade" [(ngModel)]="cliente.idade" placeholder="Idade">
-           <mat-error *ngIf="numero.invalid">Mínimo de 3 caracteres</mat-error>
-        </mat-form-field> -->
-      
+     
     </form>
-    <button mat-raised-button [disabled]="form.invalid" (click)="editando? salvar() : atualizar()" class="cadastro">{{editando? 'Salvar ' : 'Cadastrar'}}</button>
-    <button mat-raised-button color="primary" routerLink="/clientes">Voltar Pesquisa</button>
+    <button mat-raised-button [disabled]="form.invalid" (click)="editando? atualizar(): salvar()" class="cadastro">{{editando? 'Salvar ' : 'Cadastrar'}}</button>
+    <button mat-raised-button color="primary" routerLink="/contas">Voltar Pesquisa</button>
     </div>
   </div>

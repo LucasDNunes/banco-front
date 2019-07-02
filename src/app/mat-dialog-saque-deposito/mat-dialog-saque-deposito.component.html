@@ -1,10 +1,10 @@
 <div mat-dialog-content>
-  <p>Digite o valor para {{data.name}}</p>
+  <p>Digite o valor para {{data.descricao}}.</p>
   <mat-form-field>
-    <input matInput type="number" [(ngModel)]="data.animal" placeholder="valor" name="valor">
+    <input matInput type="number" min="0" [(ngModel)]="data.valor" placeholder="valor" name="valor">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()" color="warn">Não obrigado</button>
+  <button mat-button [mat-dialog-close]="data.valor" cdkFocusInitial>{{data.acao}}</button>
 </div>

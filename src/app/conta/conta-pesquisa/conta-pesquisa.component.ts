@@ -26,11 +26,8 @@ export class ContaPesquisaComponent implements OnInit {
   Entidade = 'Conta';
   columnsToDisplay: string[] = ['cliente', 'agencia', 'saldo'];
   expandedElement: Conta | null;
-  dataSource = null;
+  dataSource;
   excluir = false;
-
-  animal: string;
-  name: string;
 
   ngOnInit() {
     this.listar();
@@ -62,7 +59,11 @@ export class ContaPesquisaComponent implements OnInit {
 
   listar() {
     this.service.listar().then(dados => {
-      this.dataSource = new MatTableDataSource(dados['content']);
+      const contas: Conta[] =  dados['content'];
+      this.dataSource = new MatTableDataSource(contas);
+      this.dataSource.filterPredicate = (data: Conta, filter: string) => {
+        return data.cliente.nome == filter;
+       };
     });
   }
 
@@ -88,14 +89,18 @@ export class ContaPesquisaComponent implements OnInit {
   sacar(conta: Conta): void {
     const dialogRef = this.dialog.open(MatDialogSaqueDepositoComponent, {
       width: '300px',
-      // data: 'Deseja realemnte excluir a conta do cliente: ' + conta.cliente.nome + ' ?'
-      data: {name: this.name, animal: this.animal}
+      data: {descricao: 'saque', valor: null, acao: 'Sacar'}
     });
 
     dialogRef.afterClosed().subscribe(valor => {
       if (valor) {
         if (valor > conta.saldo) {
           this.snackBar.open('Valor acima do saldo em conta', 'fechar', {
+            duration: 10000
+          });
+          return;
+        } else if (valor < 0) {
+          this.snackBar.open('insira um valor positivo', 'fechar', {
             duration: 10000
           });
           return;
@@ -114,12 +119,17 @@ export class ContaPesquisaComponent implements OnInit {
   depositar(conta: Conta): void {
     const dialogRef = this.dialog.open(MatDialogSaqueDepositoComponent, {
       width: '300px',
-      // data: 'Deseja realemnte excluir a conta do cliente: ' + conta.cliente.nome + ' ?'
-      data: {name: 'this.name', animal: this.animal}
+      data: {descricao: 'deposito', valor: null, acao: 'Depositar'}
     });
 
     dialogRef.afterClosed().subscribe(valor => {
       if (valor) {
+        if (valor < 0) {
+          this.snackBar.open('insira um valor positivo', 'fechar', {
+            duration: 10000
+          });
+          return;
+        }
         this.service.depositar(conta, valor).then(() => {
           this.listar();
         }).catch(erro => {
